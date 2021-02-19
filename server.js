@@ -17,24 +17,31 @@ let io = socket(server);
 io.on('connection', newConnection);
 
 function newConnection(socket) {
+  console.log("socket id : "+ socket.id);
+
+  socket.join('room1');
+  socket.to('room1').emit('enter_to_room');
+
+  function enter_to_room() {
+    console.log("sending room1");
+  }
+
+  socket.emit("welcome","Welcome, your id:");
   //socket.emit -> one user
   //socket.brodcast.emit -> except user, all user
   //io.emit -> all users
-  socket.on('dot',(data)=>{
-    io.emit('dot', data);
+  //socket.to('room1').emit('enter_to_room') -> send a event to a room
+  socket.on('client_enter',(data)=>{
+    io.emit('client_enter', data);
   });
   
   socket.on('disconnect', ()=>{
     io.emit('message','a user has left the chat');
   })
-  console.log("socket id : "+ socket.id);
-  //when mouse message comes, socket.on('mouse',mouseMsg) working
-  socket.on('mouse',mouseMsg)
-
-  function mouseMsg(data){
+ 
+  socket.on('mouse',(data)=>{
     console.log(data);
     socket.broadcast.emit('mouse',data);
-    //do can be useful for online pacman game?
-    // io.socket.emit('mouse', data)
-  }
+  })
+
 }
