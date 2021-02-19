@@ -1,13 +1,10 @@
-// ITP Networked Media, Fall 2014
-// https://github.com/shiffman/itp-networked-media
-// Daniel Shiffman
+let dot;
 
 // Keep track of our socket connection
 var socket;
 
 function setup() {
   createCanvas(400, 400);
-  background(200,222,20);
   // Start a socket connection to the server
   socket = io.connect('http://localhost:3000');
 
@@ -21,11 +18,18 @@ function setup() {
       ellipse(data.x, data.y, 20, 20);
     }
   );
-  
+  dot = new Dot();
+  socket.emit("dot",dot);
+}
+
+function cagir(data){
+  data.tyap = data.a
+  console.log(data.tyap);
 }
 
 function draw() {
-  // Nothing
+  background(200,222,20);
+  dot.show();
 }
 
 function mouseDragged() {

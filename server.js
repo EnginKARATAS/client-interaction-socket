@@ -14,9 +14,19 @@ let socket = require('socket.io');
 let io = socket(server);
 
 // Setup a connection
-io.sockets.on('connection', newConnection);
+io.on('connection', newConnection);
 
 function newConnection(socket) {
+  //socket.emit -> one user
+  //socket.brodcast.emit -> except user, all user
+  //io.emit -> all users
+  socket.on('dot',(data)=>{
+    io.emit('dot', data);
+  });
+  
+  socket.on('disconnect', ()=>{
+    io.emit('message','a user has left the chat');
+  })
   console.log("socket id : "+ socket.id);
   //when mouse message comes, socket.on('mouse',mouseMsg) working
   socket.on('mouse',mouseMsg)
