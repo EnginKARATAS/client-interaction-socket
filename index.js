@@ -10,28 +10,12 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log("connection id : " + socket.id);
-
-  socket.on('join', function (room) {
-    console.log("join " + room);
-    io.emit("join", room);
-    socket.join(room);
-  });
-
-  socket.on("deneme", (data) => {
-    console.log("object");
-    console.log(data);
-
-  });
-
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
-    io.emit('chat message', msg);
-    //send message to room1  
-
+  
+  socket.on('join_request',(room) => {
+    console.log(socket.id + "client joined room" + room);
+    socket.join(room)
   })
-
-
+   
 
 
 });
