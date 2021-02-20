@@ -19,10 +19,28 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
 
+  //send users
+  socket.on('tick', () =>{
+    io.to('abc123').emit('tick_arr',dots)
+  })
+
+  //user join
   socket.on('join', (room) => {
     console.log(socket.id + " client joined room " + room);
     socket.join(room)
   })
+
+  socket.on('add_user',Dot =>{
+    console.log(dot);
+    dots.push(Dot);
+  })
+
+  // socket.on('get_users',() =>{
+    
+  //   //assignment to client dots
+  //    io.to('abc123').emit('res_assignment_array', dots);//send back to client if user in room
+
+  // })
 
   //config disconnection
   socket.on('disconnect', () => {

@@ -1,19 +1,35 @@
 let dots = [];
-let user;
+let dot;
 
 // Keep track of our socket connection
 
+function preload(){
+  socket = io.connect('http://localhost:3000');
+  socket.emit('join', room);
+  
+  //add to dots, opened client(user)
+  dot = new Dot();
+  
+  // Start a socket connection to the server
+  console.log("dot");
+  socket.emit('add_user',"dot");
+
+}
+
 function setup() {
   createCanvas(400, 400);
-  // Start a socket connection to the server
-  socket = io.connect('http://localhost:3000');
-  socket.emit('join',room);
-  
 
 }
 
 function draw() {
   background(200, 222, 20);
+
+  socket.emit('tick',()=>{
+  })
+
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].show();
+  }
 }
 
 function mouseDragged() {
