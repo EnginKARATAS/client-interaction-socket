@@ -18,20 +18,16 @@ app.get('/', (req, res) => {
 
 
 io.on('connection', (socket) => {
-
   //send users
   socket.on('tick', () =>{
-    io.to('abc123').emit('tick_arr',dots)
+    socket.emit('message', "mesaj")
   })
 
   //user join
-  socket.on('join', (room) => {
-    console.log(socket.id + " client joined room " + room);
-    socket.join(room)
-  })
+  
 
   socket.on('add_user',Dot =>{
-    console.log(dot);
+    console.log(Dot);
     dots.push(Dot);
   })
 

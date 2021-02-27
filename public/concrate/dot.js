@@ -6,7 +6,7 @@ class Dot{
             this.alp = dot.alp;
         } else {
             this.x = 15;
-            this.y = 75;
+            this.y = random(20,400);
             this.alp = random(51)
         }
     }

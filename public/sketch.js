@@ -5,19 +5,20 @@ let dot;
 
 function preload(){
   socket = io.connect('http://localhost:3000');
-  socket.emit('join', room);
   
   //add to dots, opened client(user)
   dot = new Dot();
   
   // Start a socket connection to the server
-  console.log("dot");
-  socket.emit('add_user',"dot");
+  socket.emit('add_user',dot);
 
 }
 
 function setup() {
   createCanvas(400, 400);
+  socket.on('connect',dots=>{
+    
+  })
 
 }
 
