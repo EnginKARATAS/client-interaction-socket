@@ -1,14 +1,15 @@
-var socket = io();
-var room = "abc123";
+//  const io = require('socket.io-client');
 
+ let games = io.connect("http://localhost:3000/");
 
-socket.on('tick_arr', sv_dots => {
-  console.log("geliyor gelmekte olan");
-  // dots.concat(sv_dots);
-})
+ games.on("welcome",(msg)=>{
+   console.log(msg);
+ })
 
-socket.on('message', (msg) => {
-  console.log("msg");
-})
+ socket.on("error", (err) => {
+   console.log(err);
+ })
 
-
+ socket.on("success",(success)=>{
+   console.log(success);
+ })

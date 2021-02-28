@@ -1,75 +1,36 @@
-let dots = [];
-
-let express = require('express');
-let app = express();
-let port = Number(process.env.PORT || 3000);
-let server = app.listen(port);
-
+const express = require('express');
+const app = express();
+const port = 3000;
+const http = require('http').createServer();
 app.use(express.static('public'));
-console.log("My socket server is running on port " + port);
-// Start socket.io
-let socket = require('socket.io');
-// Connect it to the web server
-let io = socket(server);
+const io = require('socket.io')(http);
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+http.listen(port, () => {
+  console.log("server listening " + port);
 });
 
+// io.on('connection',(socket)=>{
+//   socket.emit('welcome',"Hello canım")
 
-io.on('connection', (socket) => {
-  //send users
-  socket.on('tick', () =>{
-    socket.emit('message', "mesaj")
-  })
-
-  //user join
-  
-
-  socket.on('add_user',Dot =>{
-    console.log(Dot);
-    dots.push(Dot);
-  })
-
-  // socket.on('get_users',() =>{
-    
-  //   //assignment to client dots
-  //    io.to('abc123').emit('res_assignment_array', dots);//send back to client if user in room
-
-  // })
-
-  //config disconnection
-  socket.on('disconnect', () => {
-    let msg = "a user disconnected "
-    io.to('abc').emit('message', msg);
-    dots.pop();
-  })
-
-});
-
-
-// //send clients dot array once 
-// io.to('abc123').emit('get_dot', dots);
-
-// socket.on('join', (room) => {
-//   console.log(socket.id + "client joined room" + room);
-//   socket.join(room)
-// })
-
-// socket.on('user_moved', data => {
-//   let msg = "user moved "
-//   io.to('abc123').emit('message', msg);//send back to client if user in room
-// })
-
-// //kullanıcı emit yapmış
-// socket.on('add_dot_init', Dot => {
-//   let msg = "new Dot(user) come to server, adding array..."
-//   dots.push(Dot);
-
-//   //send back to client if user in room
-//   io.sockets.in('abc123').emit('message', msg);
-
-//   //kullanıcıya gönder
-//   // socket.emit('get_dot_init', dots)
-//   io.sockets.in('abc123').emit('get_dot_init', dots);
+//   console.log("client connection");
 // });
+
+// const rooms = ["lol", "bf4", "csgo"]
+
+// io
+//   .of("/games")
+//   .on('connection', (socket) => {
+//     console.log("New Client Came" + socket.id.substring(5));
+//     io.emit('welcome', "hello welcome to game area (game namespace)");
+
+//     socket.on('joinRoom', (room) => {
+//       if (rooms.includes(room)) {
+//         socket.join(room)
+//         socket.emit('success', "Welcome to room " + room)
+//       }
+//       else {
+//         socket.emit('error', "There is no room about " + room)
+//       }
+//     });
+//   })
+
