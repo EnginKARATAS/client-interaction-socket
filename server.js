@@ -12,8 +12,45 @@ http.listen(port, () => {
 // io.on('connection',(socket)=>{
 //   socket.emit('welcome',"Hello canım")
 
+<<<<<<< HEAD
 //   console.log("client connection");
 // });
+=======
+io.on('connection', (socket) => {
+
+  socket.on('join', (room) => {
+    console.log(socket.id + " client joined room " + room);
+    socket.join(room)
+  })
+
+  //config disconnection
+  socket.on('disconnect', () => {
+    let msg = "a user disconnected "
+    io.to('abc').emit('message', msg);
+    dots.pop();
+  })
+
+});
+
+
+// //send clients dot array once 
+// io.to('abc123').emit('get_dot', dots);
+
+// socket.on('join', (room) => {
+//   console.log(socket.id + "client joined room" + room);
+//   socket.join(room)
+// })
+
+// socket.on('user_moved', data => {
+//   let msg = "user moved "
+//   io.to('abc123').emit('message', msg);//send back to client if user in room
+// })
+
+// //kullanıcı emit yapmış
+// socket.on('add_dot_init', Dot => {
+//   let msg = "new Dot(user) come to server, adding array..."
+//   dots.push(Dot);
+>>>>>>> parent of 9b7e3ae (last commit 20.02.2021. I will look again tomorrow)
 
 // const rooms = ["lol", "bf4", "csgo"]
 
